@@ -11,7 +11,7 @@
     $logado = $_SESSION['email'];
     if (!empty($_GET['search'])) {
         $data = $_GET['search'];
-        $sql = "SELECT * FROM vendas WHERE ides LIKE '%$data%' OR preco LIKE '%$data%' OR quantidade LIKE '%$data%' OR nome LIKE '%$data%' OR cor LIKE '%$data%' OR marca LIKE '%$data%' OR tamanho LIKE '%$data%' ORDER BY ides DESC";
+        $sql = "SELECT * FROM vendas WHERE ides LIKE '%$data%' OR preco LIKE '%$data%' OR quantidade LIKE '%$data%' OR nome LIKE '%$data%' OR cor LIKE '%$data%' OR marca LIKE '%$data%' OR tamanho LIKE '%$data%' OR tipo LIKE '%$data%' ORDER BY ides DESC";
     } else {
         $sql = "SELECT * FROM vendas ORDER BY ides DESC";
     }
@@ -158,7 +158,7 @@
 
     function searchData()
     {
-        window.location = 'produtos.php?search='+search.value;
+        window.location = 'vendas.php?search='+search.value;
     }
 </script>
 </html>

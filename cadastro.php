@@ -1,70 +1,40 @@
 
 <?php
+if (isset($_POST['submit'])) {
+    include_once('config.php');
+    $nome = $_POST['nome'];
+    $email = $_POST['email'];
+    $telefone = $_POST['telefone'];
+    $sexo = $_POST['genero'];
+    $data_nasc = $_POST['dataNascimento'];
+    $cidade = $_POST['cidade'];
+    $estado = $_POST['estado'];
+    $endereco = $_POST['endereco'];
 
-
-    if(isset($_POST['submit']))
-    {
-        // print_r('Nome: ' . $_POST['nome']);
-        // print_r('<br>');
-        // print_r('Email: ' . $_POST['email']);
-        // print_r('<br>');
-        // print_r('Telefone: ' . $_POST['telefone']);
-        // print_r('<br>');
-        // print_r('Sexo: ' . $_POST['genero']);
-        // print_r('<br>');
-        // print_r('Data de nascimento: ' . $_POST['data_nascimento']);
-        // print_r('<br>');
-        // print_r('Cidade: ' . $_POST['cidade']);
-        // print_r('<br>');
-        // print_r('Estado: ' . $_POST['estado']);
-        // print_r('<br>');
-        // print_r('Endereço: ' . $_POST['endereco']);
-
-        include_once('config.php');
-
-        $nome = $_POST['nome'];
-        $email = $_POST['email'];
-        $senha = $_POST['senha'];
-        $telefone = $_POST['telefone'];
-        $sexo = $_POST['genero'];
-        $data_nasc = $_POST['dataNascimento'];
-        $cidade = $_POST['cidade'];
-        $estado = $_POST['estado'];
-        $endereco = $_POST['endereco'];
-
-        // Verificação dos campos no servidor
+    // Verificação dos campos no servidor
     $valid = true;
-
     if (strlen($nome) < 3) {
         $valid = false;
     }
-
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $valid = false;
     }
-
-    if (strlen($senha) < 8) {
-        $valid = false;
-    }
-
     if ($valid) {
         // Uso de prepared statements
-        $stmt = $conexao->prepare("INSERT INTO usuarios (nome, senha, email, telefone, sexo, datadenascimento, cidade, estado, endereco) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssssss", $nome, $senha, $email, $telefone, $sexo, $data_nasc, $cidade, $estado, $endereco);
-
-        if($stmt->execute()) {
+        $stmt = $conexao->prepare("INSERT INTO usuarios (nome, email, telefone, sexo, datadenascimento, cidade, estado, endereco) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssss", $nome, $email, $telefone, $sexo, $data_nasc, $cidade, $estado, $endereco);
+        if ($stmt->execute()) {
             header('Location: sistema.php');
         } else {
             // Log de erro para o desenvolvedor
             error_log("Erro ao cadastrar usuário: " . $stmt->error);
         }
-
         $stmt->close();
     }
-
     $conexao->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -182,13 +152,6 @@
                     <input type="text" name="nome" id="nome" class="inputUser requirede" oninput="nameValidate()" required>
                     <label for="nome"  class="labelInput">Nome Completo</label>
                     <span class="span-required">Nome deve ter no minimo 3 caracteres</span>
-
-                </div>
-                <br><br>
-                <div class="inputBox">
-                    <input type="password" name="senha" id="senha" class="inputUser requirede" oninput="mainPasswordValidate()" required>
-                    <label for="senha"  class="labelInput">Senha</label>
-                    <span class="span-required">Digite uma senha com no minimo 8 caracteres</span>
 
                 </div>
                 <br><br>

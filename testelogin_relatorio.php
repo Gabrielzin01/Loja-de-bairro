@@ -23,18 +23,18 @@
         {
             unset($_SESSION['email']);
             unset($_SESSION['senha']);
-            header('Location: login.php');
+            header('Location: relatorio_login.php');
         }
         else
         {
             $_SESSION['email'] = $email;
             $_SESSION['senha'] = $senha;
-            header('Location: sistema.php');
+            header('Location: contador_teste.php');
         }
     }
     else
     {
         // Não acessa
-        header('Location: login.php');
+        header('Location: relatorio_login.php');
     }
 ?>

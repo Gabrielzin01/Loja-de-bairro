@@ -10,7 +10,7 @@ if (isset($_POST['ok'])) {
         $erro[] = "Email inválido";
     }
 
-    $sql_code = "SELECT senha, id FROM usuarios WHERE email = '$email'";
+    $sql_code = "SELECT senha, id FROM cadastro WHERE email = '$email'";
     $sql_query = $conexao->query($sql_code) or die($conexao->error);
     $dado = $sql_query->fetch_assoc();
     $total = $sql_query->num_rows;
@@ -29,7 +29,7 @@ if (isset($_POST['ok'])) {
 
      
 
-        $sql_code = "UPDATE usuarios SET senha = '$nscriptografada' WHERE email = '$email'";
+        $sql_code = "UPDATE cadastro SET senha = '$nscriptografada' WHERE email = '$email'";
         $sql_query = $conexao->query($sql_code) or die($conexao->error);
 
         if($sql_query) {

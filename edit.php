@@ -14,7 +14,6 @@ if (!empty($_GET['id'])) {
         while ($user_data = mysqli_fetch_assoc($result)) {
             $nome = $user_data['nome'];
             $email = $user_data['email'];
-            $senha = $user_data['senha'];
             $telefone = $user_data['telefone'];
             $sexo = $user_data['sexo'];
             $datadenascimeto = $user_data['datadenascimento'];
@@ -151,13 +150,6 @@ else
                     <input type="text" name="nome" id="nome" class="inputUser requirede" oninput="nameValidate()" value="<?php echo $nome ?>" required>
                     <label for="nome"  class="labelInput">Nome Completo</label>
                     <span class="span-required">Nome deve ter no minimo 3 caracteres</span>
-
-                </div>
-                <br><br>
-                <div class="inputBox">
-                    <input type="text" name="senha" id="senha" class="inputUser requirede" oninput="mainPasswordValidate()"  value="<?php echo $senha ?>" required>
-                    <label for="senha"  class="labelInput">Senha</label>
-                    <span class="span-required">Digite uma senha com no minimo 8 caracteres</span>
 
                 </div>
                 <br><br>

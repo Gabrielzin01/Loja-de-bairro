@@ -26,7 +26,6 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nome</th>
-                    <th scope="col">Senha</th>
                     <th scope="col">Email</th>
                     <th scope="col">Telefone</th>
                     <th scope="col">Sexo</th>
@@ -44,7 +43,6 @@
                     echo "<tr>";
                     echo "<td>".$user_data['id']."</td>";
                     echo "<td>".$user_data['nome']."</td>";
-                    echo "<td>".$user_data['senha']."</td>";
                     echo "<td>".$user_data['email']."</td>";
                     echo "<td>".$user_data['telefone']."</td>";
                     echo "<td>".$user_data['sexo']."</td>";
@@ -127,6 +125,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                        <a class="btn-custom me-2" href="relatorio_login.php">Area de Relatorio</a>
+                    </li>
+
                 <li class="nav-item">
                         <a class="btn-custom me-2" href="vendas.php">Consulta de Vendas</a>
                     </li>

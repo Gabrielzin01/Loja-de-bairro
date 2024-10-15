@@ -1,40 +1,32 @@
 
 <?php
+include_once('config.php');
 
+if (isset($_POST['submit'])) {
+    // Recuperando os valores do formulário
+    $nome = $_POST['nome'];  // Obtenha o nome selecionado
+    $tipo = $_POST['tipo'];
+    $preco = $_POST['preco'];
+    $cor = $_POST['cor'];
+    $marca = $_POST['marca'];
+    $tamanho = $_POST['tamanho'];
+    $quantidade = $_POST['quantidade'];
 
-    if(isset($_POST['submit']))
-    {
-        // print_r('Nome: ' . $_POST['nome']);
-        // print_r('<br>');
-        // print_r('Email: ' . $_POST['email']);
-        // print_r('<br>');
-        // print_r('Telefone: ' . $_POST['telefone']);
-        // print_r('<br>');
-        // print_r('Sexo: ' . $_POST['genero']);
-        // print_r('<br>');
-        // print_r('Data de nascimento: ' . $_POST['data_nascimento']);
-        // print_r('<br>');
-        // print_r('Cidade: ' . $_POST['cidade']);
-        // print_r('<br>');
-        // print_r('Estado: ' . $_POST['estado']);
-        // print_r('<br>');
-        // print_r('Endereço: ' . $_POST['endereco']);
+    // Inserindo os dados no banco
+    $result = mysqli_query($conexao, "INSERT INTO vendas(nome, tipo, preco, cor, marca, tamanho, quantidade) 
+    VALUES ('$nome', '$tipo', '$preco', '$cor', '$marca', '$tamanho', '$quantidade')");
 
-        include_once('config.php');
+    header('Location: vendas.php');
+}
 
-        $tipo = $_POST['tipo'];
-        $preco = $_POST['preco'];
-        $fornecedor = $_POST['fornecedor'];
-        $cor = $_POST['cor'];
-        $marca = $_POST['marca'];
-        $tamanho = $_POST['tamanho'];
-   
-        $result = mysqli_query($conexao, "INSERT INTO estoque(tipo,preco,fornecedor,cor,marca,tamanho) 
-        VALUES ('$tipo','$preco','$fornecedor','$cor','$marca','$tamanho')");
-
-        header('Location: produtos.php');
+// Recuperar nomes dos usuários para o select
+$userResult = mysqli_query($conexao, "SELECT nome FROM usuarios");
+$usuarios = [];
+while ($row = mysqli_fetch_assoc($userResult)) {
+    $usuarios[] = $row['nome'];
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,12 +125,23 @@
     </style>
 </head>
 <body>
-    <a href="produtos.php">Voltar</a>
+    <a href="vendas.php">Voltar</a>
     <div class="box">
-        <form id="form" action="cadastro_produto.php" method="POST" >
+        <form id="form" action="cadastro_vendas.php" method="POST">
             <fieldset>
                 <legend><b>Cadastro</b></legend>
                 <br>
+                
+                <!-- Campo de seleção para o nome -->
+                <label for="nome">Selecione o Nome:</label>
+                <select name="nome" id="nome" required>
+                    <option value="">Selecione um usuário</option>
+                    <?php foreach ($usuarios as $usuario) : ?>
+                        <option value="<?= $usuario; ?>"><?= $usuario; ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <br><br>
+
                 <p>Tipo de Roupa</p>
                 <input type="radio" id="camisa" name="tipo" value="camisa" required>
                 <label for="camisa">Camisa</label>
@@ -147,16 +150,7 @@
                 <input type="radio" id="tenis" name="tipo" value="tenis" required>
                 <label for="tenis">Tenis</label>
                 <br><br>
-                <div class="inputBox">
-                    <input type="text" name="preco" id="preco" class="inputUser requirede" oninput="mainPasswordValidate()" required>
-                    <label for="preco"  class="labelInput">Preço</label>
-
-                </div>
-                <br><br>
-                <div class="inputBox">
-                    <input type="text" name="fornecedor" id="fornecedor" class="inputUser requirede" oninput="emailValidate()" required>
-                    <label for="fornecedor" class="labelInput">Fornecedor</label>
-                </div>
+                
                 <p>Cor</p>
                 <input type="radio" id="vermelho" name="cor" value="vermelho" required>
                 <label for="vermelho">Vermelho</label>
@@ -166,13 +160,19 @@
                 <br>
                 <input type="radio" id="amarelo" name="cor" value="amarelo" required>
                 <label for="amarelo">Amarelo</label>
-                <br><br><br>
-                <div class="inputBox">
-                    <input type="text" name="marca" id="marca" class="inputUser requirede" oninput="cityValidate()" required>
-                    <label for="marca"  class="labelInput">Marca</label>
-
-                </div>
                 <br><br>
+
+                <p>Marca</p>
+                <input type="radio" id="nike" name="marca" value="nike" required>
+                <label for="nike">NIKE</label>
+                <br>
+                <input type="radio" id="addidas" name="marca" value="addidas" required>
+                <label for="addidas">ADDIDAS</label>
+                <br>
+                <input type="radio" id="puma" name="marca" value="puma" required>
+                <label for="puma">PUMA</label>
+                <br><br>
+
                 <p>Tamanho</p>
                 <input type="radio" id="p" name="tamanho" value="p" required>
                 <label for="p">P</label>
@@ -180,20 +180,23 @@
                 <label for="m">M</label>
                 <input type="radio" id="g" name="tamanho" value="g" required>
                 <label for="g">G</label>
-                <br><br>
+                <br><br><br>
+
+                <div class="inputBox">
+                    <input type="text" name="quantidade" id="quantidade" class="inputUser requirede" required>
+                    <label for="quantidade" class="labelInput">Quantidade</label>
+                </div>
+                <br>
+                
+                <!-- Exibição do preço fixo -->
+                <p>Preço: 50R$</p>
+                
+                <!-- Campo oculto para enviar o preço fixo -->
+                <input type="hidden" name="preco" value="50">
+                
                 <input type="submit" name="submit" id="submit">
-                 
-
-
-
-            </fieldset>            
-  
-
-
+            </fieldset>
         </form>
-
-
-
     </div>
 </body>
 </html>

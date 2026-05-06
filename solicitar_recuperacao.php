@@ -4,9 +4,9 @@ include("config.php");
 if (isset($_POST['ok'])) {
     
     $email = $conexao->real_escape_string($_POST['email']);
-    $erro = array(); // Inicializa o array de erros
+    $erro = array();
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { // Corrigido para verificar se o email é inválido
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erro[] = "Email inválido";
     }
 
@@ -21,23 +21,20 @@ if (isset($_POST['ok'])) {
 
     if (count($erro) == 0 && $total > 0) {
         $novasenha = substr(md5(time()), 0, 6);
-        $nscriptografada = $novasenha; // Senha não criptografada
-        //$nscriptografada = md5(md5($novasenha)); //Senha criptografada
+        $nscriptografada = $novasenha;
              
-        if(1 == 1){
-        //(mail($email, "Sua nova senha", "Sua nova senha:" .$novasenha)){
+        if (1 == 1) {
 
-     
+            $sql_code = "UPDATE cadastro SET senha = '$nscriptografada' WHERE email = '$email'";
+            $sql_query = $conexao->query($sql_code) or die($conexao->error);
 
-        $sql_code = "UPDATE cadastro SET senha = '$nscriptografada' WHERE email = '$email'";
-        $sql_query = $conexao->query($sql_code) or die($conexao->error);
-
-        if($sql_query) {
-            $erro[] = "Senha alterada com sucesso";
-        } else {
-            $erro[] = "Erro ao alterar a senha";
+            if ($sql_query) {
+                $erro[] = "Senha alterada com sucesso";
+            } else {
+                $erro[] = "Erro ao alterar a senha";
+            }
         }
-    } }
+    }
 }
 ?>
 

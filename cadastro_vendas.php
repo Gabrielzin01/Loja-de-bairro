@@ -3,8 +3,7 @@
 include_once('config.php');
 
 if (isset($_POST['submit'])) {
-    // Recuperando os valores do formulário
-    $nome = $_POST['nome'];  // Obtenha o nome selecionado
+    $nome = $_POST['nome'];  
     $tipo = $_POST['tipo'];
     $preco = $_POST['preco'];
     $cor = $_POST['cor'];
@@ -12,14 +11,14 @@ if (isset($_POST['submit'])) {
     $tamanho = $_POST['tamanho'];
     $quantidade = $_POST['quantidade'];
 
-    // Inserindo os dados no banco
+   
     $result = mysqli_query($conexao, "INSERT INTO vendas(nome, tipo, preco, cor, marca, tamanho, quantidade) 
     VALUES ('$nome', '$tipo', '$preco', '$cor', '$marca', '$tamanho', '$quantidade')");
 
     header('Location: vendas.php');
 }
 
-// Recuperar nomes dos usuários para o select
+
 $userResult = mysqli_query($conexao, "SELECT nome FROM usuarios");
 $usuarios = [];
 while ($row = mysqli_fetch_assoc($userResult)) {

@@ -4,7 +4,7 @@
 
  if(isset($_POST['update']))
  {
-    $cod = $_POST['cod'];  // Recupera o ID enviado pelo formulário
+    $cod = $_POST['cod'];  
     $tipo = $_POST['tipo'];
     $preco = $_POST['preco'];
     $fornecedor = $_POST['fornecedor'];

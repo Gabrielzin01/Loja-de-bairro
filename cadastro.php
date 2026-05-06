@@ -11,7 +11,7 @@ if (isset($_POST['submit'])) {
     $estado = $_POST['estado'];
     $endereco = $_POST['endereco'];
 
-    // Verificação dos campos no servidor
+    
     $valid = true;
     if (strlen($nome) < 3) {
         $valid = false;
@@ -20,13 +20,13 @@ if (isset($_POST['submit'])) {
         $valid = false;
     }
     if ($valid) {
-        // Uso de prepared statements
+       
         $stmt = $conexao->prepare("INSERT INTO usuarios (nome, email, telefone, sexo, datadenascimento, cidade, estado, endereco) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssss", $nome, $email, $telefone, $sexo, $data_nasc, $cidade, $estado, $endereco);
         if ($stmt->execute()) {
             header('Location: sistema.php');
         } else {
-            // Log de erro para o desenvolvedor
+            
             error_log("Erro ao cadastrar usuário: " . $stmt->error);
         }
         $stmt->close();
